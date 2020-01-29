@@ -1,7 +1,10 @@
 package com.example.studio.mapone;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -9,6 +12,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -38,13 +42,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pins);
 
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        LatLng latLng = new LatLng(19.2059, 72.8737);
+        Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).title("Thakur college").icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+        marker.setTag(0);
 
-        // Add a marker in Sydney and move the camera
-        LatLng taj = new LatLng(18.9220, 72.8347);
-        mMap.addMarker(new MarkerOptions().position(taj).title("Taj Mahal").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(taj, 16));
+        //googleMap.addMarker(new MarkerOptions().position(latLng).title("Thakur college").icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+
+        //googleMap.addMarker(new MarkerOptions().position(latLng).title("Gate way of India").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+
+
+        latLng = new LatLng(19.1982, 72.8737);
+        marker = googleMap.addMarker(new MarkerOptions().position(latLng).title("Lokhandawala Township").icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+        marker.setTag(1);
+        //googleMap.addMarker(new MarkerOptions().position(latLng).title("Lokhandawala Township").icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return false;
+            }
+        });
+
     }
 }
